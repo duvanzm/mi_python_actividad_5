@@ -49,7 +49,7 @@ while True:
 
     # 1️⃣ Menú de Gestión de Estudiantes
     while True:
-        # 1. Gestión de Estudiantes
+        
         if opcion_menu == 1:
             print("----Menú de Gestión de Estudiantes----")
             print("1. Registrar estudiante")
@@ -111,71 +111,102 @@ while True:
             else:
                 print("***Opcion invalidad***")
 
+        
          # 2️⃣ Menú de Gestión de Materias       
         elif opcion_menu == 2:
-            print("----Menú de Gestión de Materias----")
-            print("1. Registrar Materia")
-            print("2. Listar Materias")
-            print("3. Consultar Materia por ID")
-            print("4. Eliminar Materia")
-            print("5. Volver al menú principal")
+            while True:
+                print("----Menú de Gestión de Materias----")
+                print("1. Registrar Materia")
+                print("2. Listar Materias")
+                print("3. Consultar Materia por ID")
+                print("4. Eliminar Materia")
+                print("5. Volver al menú principal")
 
-            opcion_materia = int(input("Seleccione una opción: "))
+                opcion_materia = int(input("Seleccione una opción: "))
 
-            if opcion_materia == 1:
-                print("-----Registrando Materia-----")    
-                name_materia = input("Ingrese nombre: ")
-                id_materia = input("Ingrese id: ")
-                list_materias.append({
-                    "id": id_materia,
-                    "nombre": list_materias
-                })
-            elif opcion_materia == 2:
-                print("-----Listando Materias-----")
-                for i in list_materias:
-                    print(f"{i["name"]}")
-                    print(f"Total de estudiante: {len(list_materias)}")
-            elif opcion_materia == 3:
-                print("-----Consultando Materias por ID-----")
-                search_id_materia = input("Ingrese id: ")
-                for i in list_materias:
-                    if i["id"] == search_id_materia:
-                        print("---Resultado de busqueda---")
-                        print(f"Nombre: {i["name"]}")
-                        print(f"iD: {i["id"]}")
-                    else:
-                        print("Ese Id no se encuentro")
+                if opcion_materia == 1:
+                    print("-----Registrando Materia-----")    
+                    name_materia = input("Ingrese nombre: ").lower()
+                    id_materia = input("Ingrese id: ")
+                    list_materias.append({
+                        "id": id_materia,
+                        "nombre": list_materias
+                    })
+                elif opcion_materia == 2:
+                    print("-----Listando Materias-----")
+                    for i in list_materias:
+                        print(f"{i["name"]}")
+                        print(f"Total de estudiante: {len(list_materias)}")
+                elif opcion_materia == 3:
+                    print("-----Consultando Materias por ID-----")
+                    search_id_materia = input("Ingrese id: ")
+                    for i in list_materias:
+                        if i["id"] == search_id_materia:
+                            print("---Resultado de busqueda---")
+                            print(f"Nombre: {i["name"]}")
+                            print(f"iD: {i["id"]}")
+                        else:
+                            print("Ese Id no se encuentro")
 
-            elif opcion_materia == 4:
-                print("---Eliminando Materias---")
-                id_clear_materia = input("Id del Materias a eliminar: ")
-                stay_materia = 0
+                elif opcion_materia == 4:
+                    print("---Eliminando Materias---")
+                    id_clear_materia = input("Id del Materias a eliminar: ")
+                    stay_materia = 0
+                    
+                    for i in list_materias:
+                        if i["id"] == id_clear_materia:
+                            list_materias.remove(i)
+                            print(f"Se elimino el estudiante: {i["name"]}")
+                        else:
+                            stay_materia += 0
+                    if stay_materia > 0:
+                        print(f"El {id_clear_materia} no se esta en la base de datos")
+                elif opcion_materia == 5:
+                    break    
+        
+
+         # 3️⃣ Menú de Asignaciones
+        elif opcion_menu == 3:
+            while True:
+                print("----Menú de Asignaciones----")
+                print("1. Asignar materia a estudiante")
+                print("2. Ver materias de un estudiante")
+                print("3. Ver estudiantes por materia")
+                print("4. Quitar materia a un estudiante")
+                print("5. Volver al menú principal")
+
+                opcion_asignacio = int(input("Ingrese una opcion: "))
                 
-                for i in list_materias:
-                    if i["id"] == id_clear_materia:
-                        list_materias.remove(i)
-                        print(f"Se elimino el estudiante: {i["name"]}")
+                if opcion_asignacio == 1:
+                    print("---Asignando materia a estudiante---")
+                    student_id = input("Ingrese Id de estudiante: ")
+                    exists_id = next((i for i in list_students if i["id"] == student_id ), 0)
+                    if exists_id != 0:
+                        name_materia = input("Nombre de materia a agregar: ").lower()
+                        exists_materia = next((a for a in list_materias if a["name"] == name_materia), 0)
+                        if exists_materia != 0:
+                                ya_exists = any(n for n in notas if n["user_id"] == student_id and n["materia_id"] == exists_materia["id"] )
+                                if ya_exists :
+                                    print("Es materia ya esta asignada a este usuario")
+                                else:
+                                    notas.append({
+                                        "user_id": student_id,
+                                        "materia_id": exists_materia["id"],
+                                        "nota": float()
+                                    })
+
+                        else:
+                            print("La materia no esta")
                     else:
-                        stay_materia += 0
-                if stay_materia > 0:
-                    print(f"El {id_clear_materia} no se esta en la base de datos")
-            elif opcion_estudent == 5:
-                break    
-        else:
-            print("***Opcion invalidad***") 
-
-     # 3️⃣ Menú de Asignaciones
-    while True:
-        if opcion_menu == 3:
-            print("----Menú de Asignaciones----")
-            print("1. Asignar materia a estudiante")
-            print("2. Ver materias de un estudiante")
-            print("3. Ver estudiantes por materia")
-            print("4. Quitar materia a un estudiante")
-            print("5. Volver al menú principal")
-
-            opcion_asignacio = int(input("Ingrese una opcion: "))
-            
-            if opcion_asignacio == 1:
-               print("---Asignando materia a estudiante---")
-                
+                            print("Estudiante no esta") 
+                elif opcion_asignacio == 2:
+                    print("opcion 2")
+                        
+                        
+                elif opcion_asignacio == 3:     
+                    print("menu3") 
+                elif opcion_asignacio == 4:     
+                    print("menu4") 
+                elif opcion_asignacio == 5:     
+                    print("menu5") 
+                    break
