@@ -1,39 +1,46 @@
 # Variable Prueva.
-list_students = [{
+list_students = [
+    {
     "name": "pedrito",
     "id": "22",
     "age": 23,
-    "materias": [{
-        "id": "1564",
-        "nombre_materia": "ingles",
-        "notas":[{
-            "nota1":[3.4, 0.70],
-            "nota2":[4.0, 0.80],
-            "nota3":[5.0, 0.75],
-            "nota4":[3.5, 0.75]
-        }]
+    },
+    {
+    "name": "Juanito",
+    "id": "23",
+    "age": 55,
+    }
+]
 
-    }]
-}]
 
-# Variable Prueva.
-list_students2 = [{
-    "name": "pedrito",
-    "id": "22",
-    "age": 23,
-}]
-
-list_materias = [{
-    "id": "d2554",
+list_materias = [
+    {
+    "id": "13",
     "name": "ingles",
-}]
+    },
+    {
+    "id": "12",
+    "name": "español",
+    }
+    
+    ]
 
 notas = [
-    {
-        "user_id" : "22",
-        "materia_id" : "d2554",
-        "nota" : 0.6
-    }
+     {
+         "user_id" : "22",
+         "materia_id" : "12",
+         "nota" : 0.6
+     },
+     {
+         "user_id" : "23",
+         "materia_id" : "12",
+         "nota" : 0.7
+     },
+     {
+         "user_id" : "23",
+         "materia_id" : "13",
+         "nota" : 0.7
+     }
 ]
 while True:
     #     Menu principal
@@ -200,11 +207,28 @@ while True:
                     else:
                             print("Estudiante no esta") 
                 elif opcion_asignacio == 2:
-                    print("opcion 2")
-                        
-                        
+                    print("---Viendo materia de estudiante---")
+                    id_user = input("Ingrese el Id del estudiante: ")
+                    exists_user = [i for i in notas if i["user_id"] == id_user]
+                    if not exists_user:
+                        print("El Estudiante no tiene materias asignadas")
+                    else:
+                        print(exists_user)
+                        print("Materias del estudiante: ")
+                        for i in range(len(list_materias)):
+                          if list_materias[i]["id"] == exists_user[0]["materia_id"]:
+                              print(f"{list_materias[i]["name"]}")
                 elif opcion_asignacio == 3:     
-                    print("menu3") 
+                    print("---Viendo estudiantes por materia---") 
+                    materia = input("Inglese el nombre de la materia: ").lower()
+                    exists_materia = [i for i in list_materias if i["name"] == materia]
+                    if not materia:
+                        print("Esta materia no esta registradad")
+                    else:
+                        print(exists_materia)
+                        for i in range(len(list_students)):
+                            if notas[i]["user_id"] == list_students[i]["id"]:
+                                print(f"{list_students[i]["name"]}")
                 elif opcion_asignacio == 4:     
                     print("menu4") 
                 elif opcion_asignacio == 5:     
