@@ -34,7 +34,7 @@ notas = [
      {
          "user_id" : "23",
          "materia_id" : "12",
-         "nota" : 0.7
+         "nota" : 0.88
      },
      {
          "user_id" : "23",
@@ -299,13 +299,65 @@ while True:
                  
                 print("1")
             elif choise_option == 2:
-                print("2")
-            elif choise_option == 3:
-                print("3")
-            elif choise_option == 4:
-                print("4")
-            elif choise_option == 5:
-                print("5")
-            else:
+                print("---Viendo notas por materia---")
+                name_materia = input("Ingrese el nombre de la materia: ").lower()
+                data_materias = next((i for i in list_materias if i["name"] == name_materia), None)
+                if data_materias:
+                    id_materia = data_materias["id"]
+                    all_notas = [a for a in notas if a["materia_id"] == id_materia]
+                    print(all_notas)
+                    if all_notas:
+                        print("Notas: ")
+                        for i in all_notas:
+                            print(f"{i["nota"]}")
+                    else:
+                        print("Esta materi no tiene notas ")
+                else:
+                    print("La materia no existe")    
                 print("")
+            elif choise_option == 3:
+                print("---Viendo promedio de un estudiante---")
+                id_student = input("Ingrese el Id: ")
+                are_student = next((a for a in list_students if a["id"] == id_student),None)
+                data_notas = [i for i in notas if i["user_id"] == id_student]
+
+                if are_student:
+                    if data_notas:
+                        print("Notas de  las materias: ")
+                        print("---------------------------")
+                        promedio = 0
+                        for i in data_notas:
+                            promedio = i["nota"] + promedio
+                            print(i["nota"])
+                        promedio = promedio/len(data_notas)
+                        print("-------------------")
+                        print(f"Promedio: {round(promedio, 2)}")
+                    else:
+                        print(f"El estuianten {are_student["name"]} no tiene notas registradas")
+                else:
+                    print("El estudiante no existe")  
+            elif choise_option == 4:
+                print("---Eliminando una nota---")
+                id_student = input("Ingrese el Id: ")
+                data_student = next((a for a in list_students if a["id"] == id_student), None)
+                if data_student:
+                    name_materia = input("Ingrese la materia para eliminar la nota: ").lower()
+                    data_materia = next((x for x in list_materias if x["name"] == name_materia ), None)
+                    if data_materia:
+                        nota = next((f for f in notas if f["user_id"] == id_student and  f["materia_id"] == data_materia["id"]), None)
+                        if nota: 
+                            for i in  range(len(notas)):
+                                if notas[i]["user_id"] == id_student and notas[i]["materia_id"] == data_materia["id"]:
+                                    notas[i]["nota"] == 0
+                                    print(f"La Nota de {name_materia} se elimino exitosamente")
+                        else:
+                            print(f"la materia {name_materia} no esta asignada a el estudiante")     
+                    else:
+                        print(f"la materi {name_materia} no existe")
+                else:
+                    print(f"El estudiante con id {id_student} no existe")
+            elif choise_option == 5:
+                break
+            else:
+                print("*** Opcion ivalidad ***")
                 
