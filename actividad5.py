@@ -359,5 +359,5 @@ while True:
             elif choise_option == 5:
                 break
             else:
-                print("*** Opcion ivalidad ***")
+                print("***Opcion ivalidad***")
                 
