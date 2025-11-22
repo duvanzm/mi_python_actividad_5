@@ -22,7 +22,6 @@ list_materias = [
     "id": "12",
     "name": "español",
     }
-    
     ]
 
 notas = [
